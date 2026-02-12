@@ -2,18 +2,24 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>For Tutu 💖</title>
+  <title>ERROR 404</title>
   <style>
     body {
       margin: 0;
       font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(135deg, #ffb6c1, #ffe4e1);
       height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
       color: #fff;
       text-align: center;
+      overflow: hidden;
+      background: linear-gradient(135deg, #ffb6c1, #ffe4e1);
+      transition: background 0.5s;
+    }
+
+    body.error-mode {
+      background: #000; /* black for error screen */
     }
 
     .card {
@@ -23,6 +29,7 @@
       width: 90%;
       max-width: 400px;
       box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+      transition: all 1s ease;
     }
 
     input {
@@ -49,19 +56,63 @@
       background: #ff1493;
     }
 
-    .hidden {
-      display: none;
+    .hidden { display: none; }
+
+    h1 span { color: #ffd1dc; }
+
+    /* Error screen styles */
+    #errorScreen {
+      background: #000;
+      color: #ff4c4c;
+      border: 2px solid #ff0000;
+      box-shadow: 0 0 20px #ff0000;
     }
 
-    h1 span {
-      color: #ffd1dc;
+    #errorScreen h1 { font-size: 2em; color: #ff0000; }
+    #errorScreen p { font-size: 1.2em; color: #ff9999; }
+    #errorScreen button { background: #ff4c4c; color: #fff; }
+    #errorScreen button:hover { background: #ff0000; }
+
+    /* Floating hearts */
+    .heart {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: rgb(255, 92, 190);
+      transform: rotate(-45deg);
+      animation: float 4s linear infinite;
+    }
+
+    .heart::before,
+    .heart::after {
+      content: "";
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: rgb(255, 92, 190);
+      border-radius: 50%;
+    }
+
+    .heart::before { top: -10px; left: 0; }
+    .heart::after { left: 10px; top: 0; }
+
+    @keyframes float {
+      0% { transform: translateY(0) rotate(-45deg); opacity: 1; }
+      100% { transform: translateY(-400px) rotate(-45deg); opacity: 0; }
     }
   </style>
 </head>
-<body>
+<body class="error-mode">
+
+  <!-- FAKE ERROR SCREEN -->
+  <div class="card" id="errorScreen">
+    <h1>❌ ERROR 404</h1>
+    <p>Something went wrong… </p>
+
+  </div>
 
   <!-- LOCK SCREEN -->
-  <div class="card" id="lockScreen">
+  <div class="card hidden" id="lockScreen">
     <h1>🔒 Locked</h1>
     <p>Only for <span>you</span> 💕</p>
     <p>Question:</p>
@@ -87,14 +138,39 @@
       <br><br>
       — From someone who loves you endlessly 💌
     </p>
+    <button onclick="showExtra()">One more thing… 💌</button>
+    <p id="extra" class="hidden" style="margin-top:15px;">You’re my favorite person 💖✨</p>
   </div>
 
+  <!-- BACKGROUND MUSIC -->
+  <audio id="music" src="https://www.bensound.com/bensound-music/bensound-romantic.mp3" autoplay loop></audio>
+
   <script>
+    // Automatically switch from error screen to lock screen after 3 seconds
+setTimeout(() => {
+  document.getElementById('errorScreen').classList.add('hidden');
+  document.getElementById('lockScreen').classList.remove('hidden');
+  
+  // Restore body gradient
+  document.body.classList.remove('error-mode');
+}, 3000); // 3000ms = 3 seconds
+
+    // Show lock screen from error
+    function showLock() {
+      document.getElementById('errorScreen').classList.add('hidden');
+      document.getElementById('lockScreen').classList.remove('hidden');
+
+      // Restore body gradient
+      document.body.classList.remove('error-mode');
+    }
+
+    // Unlock function
     function unlock() {
       const answer = document.getElementById("answer").value.trim().toLowerCase();
       if (answer === "tutu") {
         document.getElementById("lockScreen").classList.add("hidden");
         document.getElementById("surprise").classList.remove("hidden");
+        spawnHearts();
       } else {
         document.getElementById("error").innerText = "Hmm… try again, my love 💕";
       }
@@ -102,23 +178,38 @@
 
     // Countdown to birthday
     const birthday = new Date("2009-03-06T00:00:00").getTime();
-
     setInterval(() => {
       const now = new Date().getTime();
       const diff = birthday - now;
-
+      const countdownEl = document.getElementById("countdown");
       if (diff <= 0) {
-        document.getElementById("countdown").innerHTML = "🎂 It's your birthday today! 🎉";
+        countdownEl.innerHTML = "🎂 It's your birthday today! 🎉";
         return;
       }
-
       const days = Math.floor(diff / (1000 * 60 * 60 * 24));
       const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
       const minutes = Math.floor((diff / (1000 * 60)) % 60);
-
-      document.getElementById("countdown").innerHTML =
-        `⏳ ${days} days ${hours} hrs ${minutes} min left for your birthday 💕`;
+      countdownEl.innerHTML = `⏳ ${days} days ${hours} hrs ${minutes} min left for your birthday 💕`;
     }, 1000);
+
+    // Show hidden extra message
+    function showExtra() {
+      document.getElementById('extra').classList.remove('hidden');
+    }
+
+    // Floating hearts
+    function spawnHearts() {
+      for(let i=0;i<15;i++){
+        let heart = document.createElement('div');
+        heart.classList.add('heart');
+        heart.style.left = Math.random()*100 + 'vw';
+        heart.style.animationDuration = 3 + Math.random()*2 + 's';
+        heart.style.width = 15 + Math.random()*10 + 'px';
+        heart.style.height = heart.style.width;
+        document.body.appendChild(heart);
+        setTimeout(() => { heart.remove(); }, 10000);
+      }
+    }
   </script>
 
 </body>
