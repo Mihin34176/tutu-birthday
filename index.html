@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>For Tutu 💖</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #ffb6c1, #ffe4e1);
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #fff;
+      text-align: center;
+    }
+
+    .card {
+      background: rgba(0,0,0,0.35);
+      padding: 30px;
+      border-radius: 20px;
+      width: 90%;
+      max-width: 400px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+
+    input {
+      padding: 10px;
+      width: 80%;
+      border-radius: 10px;
+      border: none;
+      margin-top: 15px;
+      font-size: 16px;
+    }
+
+    button {
+      margin-top: 15px;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 20px;
+      background: #ff69b4;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #ff1493;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    h1 span {
+      color: #ffd1dc;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- LOCK SCREEN -->
+  <div class="card" id="lockScreen">
+    <h1>🔒 Locked</h1>
+    <p>Only for <span>you</span> 💕</p>
+    <p>Question:</p>
+    <p><b>What nickname do I call you?</b></p>
+    <input type="text" id="answer" placeholder="Type here...">
+    <br>
+    <button onclick="unlock()">Unlock 💖</button>
+    <p id="error" style="color:#ffd1dc;"></p>
+  </div>
+
+  <!-- SURPRISE SCREEN -->
+  <div class="card hidden" id="surprise">
+    <h1>🎉 Happy Birthday <span>Tutu</span> 🎂</h1>
+    <p id="countdown"></p>
+    <hr>
+    <p>
+      Dear Tutu 💖,<br><br>
+      On this special day, I just want you to know how important you are to me.
+      Your smile makes my world brighter and my heart calmer.
+      <br><br>
+      I’m so lucky to have you.  
+      Happy Birthday, my favorite person 🥹💕
+      <br><br>
+      — From someone who loves you endlessly 💌
+    </p>
+  </div>
+
+  <script>
+    function unlock() {
+      const answer = document.getElementById("answer").value.trim().toLowerCase();
+      if (answer === "tutu") {
+        document.getElementById("lockScreen").classList.add("hidden");
+        document.getElementById("surprise").classList.remove("hidden");
+      } else {
+        document.getElementById("error").innerText = "Hmm… try again, my love 💕";
+      }
+    }
+
+    // Countdown to birthday
+    const birthday = new Date("2009-03-06T00:00:00").getTime();
+
+    setInterval(() => {
+      const now = new Date().getTime();
+      const diff = birthday - now;
+
+      if (diff <= 0) {
+        document.getElementById("countdown").innerHTML = "🎂 It's your birthday today! 🎉";
+        return;
+      }
+
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+      const minutes = Math.floor((diff / (1000 * 60)) % 60);
+
+      document.getElementById("countdown").innerHTML =
+        `⏳ ${days} days ${hours} hrs ${minutes} min left for your birthday 💕`;
+    }, 1000);
+  </script>
+
+</body>
+</html>
