@@ -2,132 +2,153 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>ERROR 404</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy Birthday Tutu</title>
   <style>
+    /* 🎨 Aesthetic Color Palette based on your image */
+    :root {
+      --bg-light-blue: #a2d2ff;
+      --accent-teal: #7ed6df;
+      --text-dark: #2d3436;
+      --white-card: rgba(255, 255, 255, 0.9);
+    }
+
     body {
       margin: 0;
-      font-family: 'Segoe UI', sans-serif;
+      font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
       height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      color: #fff;
+      color: var(--text-dark);
       text-align: center;
-      overflow: hidden;
-      background: linear-gradient(135deg, #ffb6c1, #ffe4e1);
-      transition: background 0.5s;
+      overflow-x: hidden;
+      /* Background matches the blue sky in the photo */
+      background: linear-gradient(135deg, var(--bg-light-blue), #ffffff);
+      transition: background 0.8s ease;
     }
 
     body.error-mode {
-      background: #000; /* black for error screen */
+      background: #000;
     }
 
     .card {
-      background: rgba(0,0,0,0.35);
+      background: var(--white-card);
       padding: 30px;
-      border-radius: 20px;
+      border-radius: 25px;
       width: 90%;
-      max-width: 400px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-      transition: all 1s ease;
+      max-width: 450px;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      transition: all 0.5s ease;
+      max-height: 85vh;
+      overflow-y: auto;
     }
 
+    /* 📸 Styling for your uploaded collage */
+    .birthday-photo {
+      width: 100%;
+      border-radius: 15px;
+      margin: 15px 0;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+      border: 5px solid white;
+    }
+
+    h1 { font-weight: 800; margin-bottom: 10px; }
+    h1 span { color: #288598; }
+
     input {
-      padding: 10px;
+      padding: 12px;
       width: 80%;
-      border-radius: 10px;
-      border: none;
+      border-radius: 12px;
+      border: 2px solid var(--bg-light-blue);
       margin-top: 15px;
       font-size: 16px;
+      outline: none;
+      text-align: center;
     }
 
     button {
-      margin-top: 15px;
-      padding: 10px 20px;
+      margin-top: 20px;
+      padding: 12px 30px;
       border: none;
-      border-radius: 20px;
-      background: #ff69b4;
+      border-radius: 30px;
+      background: linear-gradient(45deg, var(--accent-teal), var(--bg-light-blue));
       color: white;
       font-size: 16px;
+      font-weight: bold;
       cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
     }
 
     button:hover {
-      background: #ff1493;
+      transform: scale(1.05);
+      box-shadow: 0 5px 15px rgba(126, 214, 223, 0.4);
     }
 
     .hidden { display: none; }
 
-    h1 span { color: #ffd1dc; }
-
-    /* Error screen styles */
+    /* 💔 Error Screen Styling */
     #errorScreen {
-      background: #000;
+      background: #111;
       color: #ff4c4c;
       border: 2px solid #ff0000;
-      box-shadow: 0 0 20px #ff0000;
+      box-shadow: 0 0 30px #ff0000;
     }
 
-    #errorScreen h1 { font-size: 2em; color: #ff0000; }
-    #errorScreen p { font-size: 1.2em; color: #ff9999; }
-    #errorScreen button { background: #ff4c4c; color: #fff; }
-    #errorScreen button:hover { background: #ff0000; }
-
-    /* Floating hearts */
+    /* 💖 Floating Hearts (Teal to match Fav. Color) */
     .heart {
       position: absolute;
       width: 20px;
       height: 20px;
-      background: rgb(255, 92, 190);
+      background: var(--accent-teal);
       transform: rotate(-45deg);
       animation: float 4s linear infinite;
+      z-index: -1;
     }
-
-    .heart::before,
-    .heart::after {
+    .heart::before, .heart::after {
       content: "";
       position: absolute;
       width: 20px;
       height: 20px;
-      background: rgb(255, 92, 190);
+      background: var(--accent-teal);
       border-radius: 50%;
     }
-
     .heart::before { top: -10px; left: 0; }
     .heart::after { left: 10px; top: 0; }
 
     @keyframes float {
       0% { transform: translateY(0) rotate(-45deg); opacity: 1; }
-      100% { transform: translateY(-400px) rotate(-45deg); opacity: 0; }
+      100% { transform: translateY(-600px) rotate(-45deg); opacity: 0; }
     }
   </style>
 </head>
 <body class="error-mode">
 
-  <!-- FAKE ERROR SCREEN -->
   <div class="card" id="errorScreen">
     <h1>❌ ERROR 404</h1>
-    <p>Something went wrong… </p>
-
+    <p>Loading internal feelings... </p>
   </div>
 
-  <!-- LOCK SCREEN -->
   <div class="card hidden" id="lockScreen">
-    <h1>🔒 Locked</h1>
+    <h1>🔒 Private Access</h1>
     <p>Only for <span>you</span> 💕</p>
-    <p>Question:</p>
     <p><b>What nickname do I call you?</b></p>
-    <input type="text" id="answer" placeholder="Type here...">
+    <input type="text" id="answer" placeholder="Enter nickname...">
     <br>
     <button onclick="unlock()">Unlock 💖</button>
-    <p id="error" style="color:#ffd1dc;"></p>
+    <p id="errorMessage" style="color:#d63031; margin-top: 10px; font-size: 14px;"></p>
   </div>
 
-  <!-- SURPRISE SCREEN -->
   <div class="card hidden" id="surprise">
     <h1>🎉 Happy Birthday <span>Tutu</span> 🎂</h1>
-    <p id="countdown"></p>
-    <hr>
+    
+    <img src="Beige Aesthetic Photo Collage Portrait Instagram Post (1).jpg" alt="Tutu Collage" class="birthday-photo">
+
+    <p id="countdown" style="font-weight: bold; color: #288598;"></p>
+    <hr style="border:0; height:1px; background:#ddd; margin: 20px 0;">
+    
     <p>
       Dear Tutu 💖,<br><br>
       On this special day, I just want you to know how important you are to me.
@@ -135,82 +156,75 @@
       <br><br>
       I’m so lucky to have you.  
       Happy Birthday, my favorite person 🥹💕
-      <br><br>
-      — From someone who loves you endlessly 💌
     </p>
+    
     <button onclick="showExtra()">One more thing… 💌</button>
-    <p id="extra" class="hidden" style="margin-top:15px;">You’re my favorite person 💖✨</p>
+    <p id="extra" class="hidden" style="margin-top:20px; font-style: italic; color: #288598;">
+        "You’re my favorite person 💖✨"
+    </p>
   </div>
 
-  <!-- BACKGROUND MUSIC -->
-  <audio id="music" src="https://www.bensound.com/bensound-music/bensound-romantic.mp3" autoplay loop></audio>
+  <audio id="music" src="https://www.bensound.com/bensound-music/bensound-romantic.mp3" loop></audio>
 
   <script>
-    // Automatically switch from error screen to lock screen after 3 seconds
-setTimeout(() => {
-  document.getElementById('errorScreen').classList.add('hidden');
-  document.getElementById('lockScreen').classList.remove('hidden');
-  
-  // Restore body gradient
-  document.body.classList.remove('error-mode');
-}, 3000); // 3000ms = 3 seconds
-
-    // Show lock screen from error
-    function showLock() {
+    // 1. Transition from Error to Lock
+    setTimeout(() => {
       document.getElementById('errorScreen').classList.add('hidden');
       document.getElementById('lockScreen').classList.remove('hidden');
-
-      // Restore body gradient
       document.body.classList.remove('error-mode');
-    }
+    }, 3000);
 
-    // Unlock function
+    // 2. Unlock Logic
     function unlock() {
       const answer = document.getElementById("answer").value.trim().toLowerCase();
+      // Nickname from your code is "tutu"
       if (answer === "tutu") {
         document.getElementById("lockScreen").classList.add("hidden");
         document.getElementById("surprise").classList.remove("hidden");
+        document.getElementById("music").play(); // Starts music on click
         spawnHearts();
       } else {
-        document.getElementById("error").innerText = "Hmm… try again, my love 💕";
+        document.getElementById("errorMessage").innerText = "Hmm… try again, my love 💕";
       }
     }
 
-    // Countdown to birthday
-    const birthday = new Date("2009-03-06T00:00:00").getTime();
+    // 3. Countdown logic
+    const bdayDate = new Date("2009-03-06T00:00:00").getTime();
     setInterval(() => {
       const now = new Date().getTime();
-      const diff = birthday - now;
+      const diff = bdayDate - now;
       const countdownEl = document.getElementById("countdown");
+      
       if (diff <= 0) {
         countdownEl.innerHTML = "🎂 It's your birthday today! 🎉";
         return;
       }
+      
       const days = Math.floor(diff / (1000 * 60 * 60 * 24));
       const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-      const minutes = Math.floor((diff / (1000 * 60)) % 60);
-      countdownEl.innerHTML = `⏳ ${days} days ${hours} hrs ${minutes} min left for your birthday 💕`;
+      const mins = Math.floor((diff / (1000 * 60)) % 60);
+      countdownEl.innerHTML = `⏳ ${days}d ${hours}h ${mins}m left for your big day 💕`;
     }, 1000);
 
-    // Show hidden extra message
     function showExtra() {
       document.getElementById('extra').classList.remove('hidden');
     }
 
-    // Floating hearts
+    // 4. Floating Hearts logic
     function spawnHearts() {
-      for(let i=0;i<15;i++){
-        let heart = document.createElement('div');
-        heart.classList.add('heart');
-        heart.style.left = Math.random()*100 + 'vw';
-        heart.style.animationDuration = 3 + Math.random()*2 + 's';
-        heart.style.width = 15 + Math.random()*10 + 'px';
-        heart.style.height = heart.style.width;
-        document.body.appendChild(heart);
-        setTimeout(() => { heart.remove(); }, 10000);
+      for(let i=0; i<20; i++){
+        setTimeout(() => {
+          let heart = document.createElement('div');
+          heart.classList.add('heart');
+          heart.style.left = Math.random() * 100 + 'vw';
+          heart.style.animationDuration = (Math.random() * 3 + 2) + 's';
+          heart.style.width = (Math.random() * 15 + 10) + 'px';
+          heart.style.height = heart.style.width;
+          document.body.appendChild(heart);
+          setTimeout(() => { heart.remove(); }, 5000);
+        }, i * 300);
       }
     }
   </script>
-
 </body>
 </html>
